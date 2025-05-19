@@ -1,0 +1,19 @@
+<main>
+  <div>
+    <.flash_group flash={@flash} />
+    {@inner_content}
+    <form id="session-login-form" action="/session" method="post" style="display:none;">
+      <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
+      <input type="hidden" name="user_token" id="session-user-token" />
+    </form>
+    <script>
+        window.addEventListener("phx:session-login", function(event) {
+          const token = event.detail.user_token;
+          document.getElementById("session-user-token").value = token;
+          document.getElementById("session-login-form").submit();
+        // After form submit, force a full reload so LiveView remounts with new session
+        setTimeout(function() { window.location.reload(); }, 100);
+      });
+    </script>
+  </div>
+</main>

@@ -1,0 +1,31 @@
+<.flash_group flash={@flash} />
+<div class="max-w-xl mx-auto py-10">
+  <h1 class="text-3xl font-bold mb-6">Admin: Create a New Post</h1>
+  <.form :let={f} for={@changeset} method="post" class="space-y-4">
+    <div>
+      <.label for="author">Author</.label>
+      <.input field={f[:author]} id="author" class="w-full" />
+    </div>
+    <div>
+      <.label for="handle">Handle</.label>
+      <.input field={f[:handle]} id="handle" class="w-full" />
+    </div>
+    <div>
+      <.label for="avatar_url">Avatar URL</.label>
+      <.input field={f[:avatar_url]} id="avatar_url" class="w-full" />
+    </div>
+    <div>
+      <.label for="platform">Platform</.label>
+      <.input field={f[:platform]} id="platform" class="w-full" />
+    </div>
+    <div>
+      <.label for="content">Content</.label>
+      <.input type="textarea" field={f[:content]} id="content" class="w-full" />
+    </div>
+    <div>
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Create Post
+      </button>
+    </div>
+  </.form>
+</div>

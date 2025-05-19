@@ -1,0 +1,83 @@
+<.flash_group flash={@flash} />
+
+<div class="dark:bg-gray-900">
+  <div class="bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-8 text-center">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          Your Unified Feed
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300">
+          Stay connected with your favorite content from Mastodon and Bluesky
+        </p>
+      </div>
+
+      <%= if @current_user do %>
+        <div class="mb-8 text-center">
+          <a
+            href="/posts/new"
+            class="inline-block bg-brand text-white px-6 py-2 rounded shadow hover:bg-brand-dark transition"
+          >
+            New Post
+          </a>
+        </div>
+      <% end %>
+
+      <div class="space-y-6">
+        <%= for post <- @posts do %>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+              <img
+                src={post.avatar_url || "/images/default-avatar.png"}
+                alt="Avatar"
+                class="w-12 h-12 rounded-full"
+              />
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="font-medium text-gray-900 dark:text-gray-100">
+                    {(post.user && Map.get(post.user, :display_name)) ||
+                      (post.user && Map.get(post.user, :email)) || "(no user)"}
+                  </span>
+                  <span class="ml-2 text-xs px-2 py-1 rounded bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                    {post.platform}
+                  </span>
+                </div>
+                <p class="text-gray-800 dark:text-gray-200 mb-4">
+                  {post.content}
+                </p>
+                <div class="flex items-center gap-6 text-gray-500 dark:text-gray-400">
+                  <%= if @current_user do %>
+                    <button class="hover:text-red-600 dark:hover:text-red-400 flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                      </svg>
+                      <span>142</span>
+                    </button>
+                    <button class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                        />
+                      </svg>
+                      <span>24</span>
+                    </button>
+                  <% else %>
+                    <span class="italic text-gray-400">Log in to like or repost</span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
